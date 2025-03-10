@@ -6,10 +6,10 @@ public class Main
 {
     public static void main(String[] args)
     {
-        JFrame jFrame = new JFrame("NEdit");
+        App app = new App();
 
-        jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        jFrame.setSize(640, 480);
-        jFrame.setVisible(true);
+        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        app.setSize(640, 480);
+        app.setVisible(true);
     }
 }
