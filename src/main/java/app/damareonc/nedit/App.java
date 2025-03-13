@@ -3,7 +3,7 @@ package app.damareonc.nedit;
 import javax.swing.*;
 import java.awt.*;
 
-public class App extends JFrame
+public final class App extends JFrame
 {
     private String fileName = "";
     private String fileContent = "";
@@ -12,14 +12,16 @@ public class App extends JFrame
     {
         super("NEdit");
 
-        JMenuBar menuBar = new JMenuBar();
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem newMenuItem = new JMenuItem("New");
-        JMenuItem openMenuItem = new JMenuItem("Open...");
-        JMenuItem saveMenuItem = new JMenuItem("Save");
-        JMenuItem saveAsMenuItem = new JMenuItem("Save As...");
-        JTextArea textArea = new JTextArea();
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        final JMenuBar menuBar = new JMenuBar();
+        final JMenu fileMenu = new JMenu("File");
+        final JMenuItem newMenuItem = new JMenuItem("New");
+        final JMenuItem openMenuItem = new JMenuItem("Open...");
+        final JMenuItem saveMenuItem = new JMenuItem("Save");
+        final JMenuItem saveAsMenuItem = new JMenuItem("Save As...");
+        final JTextArea textArea = new JTextArea();
+        final JScrollPane scrollPane = new JScrollPane(textArea);
+
+        newMenuItem.addActionListener(actionEvent -> FileOperations.fileNew(this, textArea));
 
         fileMenu.add(newMenuItem);
         fileMenu.add(openMenuItem);
@@ -31,6 +33,16 @@ public class App extends JFrame
         this.add(scrollPane, BorderLayout.CENTER);
 
         this.addWindowListener(new WindowCloseListener(this, textArea));
+    }
+
+    public void setFileName(final String fileName)
+    {
+        this.fileName = fileName;
+    }
+
+    public void setFileContent(final String fileContent)
+    {
+        this.fileContent = fileContent;
     }
 
     public String getFileName()
