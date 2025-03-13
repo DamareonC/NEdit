@@ -4,11 +4,11 @@ Text editing software made with Java and Java Swing.
 
 ## Prerequisites
 
-* Java 21
+* JDK 21 (to run the JAR, only JRE 21 is needed)
 
 ## Build
 
-To build NEdit, run: `./mvnw package` (Mac/Linux) or `mvnw.cmd package`
+To build NEdit, run: `./mvnw package` (Mac/Linux) or `mvnw.cmd package` (Windows)
 
 ## Run
 

@@ -5,6 +5,9 @@ import java.awt.*;
 
 public class App extends JFrame
 {
+    private String fileName = "";
+    private String fileContent = "";
+
     public App()
     {
         super("NEdit");
@@ -26,5 +29,17 @@ public class App extends JFrame
 
         this.add(menuBar, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
+
+        this.addWindowListener(new WindowCloseListener(this, textArea));
+    }
+
+    public String getFileName()
+    {
+        return this.fileName;
+    }
+
+    public String getFileContent()
+    {
+        return this.fileContent;
     }
 }
