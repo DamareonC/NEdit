@@ -8,7 +8,7 @@ public final class Main
     {
         final App app = new App();
 
-        app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        app.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         app.setSize(640, 480);
         app.setVisible(true);
     }

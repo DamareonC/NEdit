@@ -14,8 +14,12 @@ public final class FileOperations
 
             if (option == JOptionPane.YES_OPTION || option == JOptionPane.NO_OPTION)
             {
-                if (option == JOptionPane.YES_OPTION);
-                    //Save function goes here
+                if (option == JOptionPane.YES_OPTION)
+                {
+                    final boolean fileSaved = fileSave(app, textArea);
+
+                    if (!fileSaved) return;
+                }
 
                 newFile(app, textArea);
             }
@@ -53,15 +57,16 @@ public final class FileOperations
                     final int saveOption = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before opening another file?", !app.getFileName().isEmpty() ? app.getFileName() : "<unnamed>"));
 
                     if (saveOption == JOptionPane.CANCEL_OPTION) return;
-                    else if (saveOption == JOptionPane.YES_OPTION);
-                        //Save function goes here
+                    else if (saveOption == JOptionPane.YES_OPTION)
+                    {
+                        final boolean fileSaved = fileSave(app, textArea);
+
+                        if (!fileSaved) return;
+                    }
                 }
 
-                app.setTitle("NEdit - " + fileChooser.getSelectedFile().getName());
-                app.setFilePath(fileChooser.getSelectedFile().getParent());
-                app.setFileName(fileChooser.getSelectedFile().getName());
-                app.setFileContent(stringBuilder.toString());
                 textArea.setText(stringBuilder.toString());
+                setAppProperties(app, fileChooser.getSelectedFile(), stringBuilder.toString());
             }
             catch (FileNotFoundException e)
             {
@@ -78,40 +83,59 @@ public final class FileOperations
         }
     }
 
-    public static void fileSave(final App app, final JTextArea textArea)
+    public static boolean fileSave(final App app, final JTextArea textArea)
     {
-        if (app.getFileContent().equals(textArea.getText())) return;
+        if (app.getFileContent().equals(textArea.getText())) return true;
 
-        if (app.getFileName().isEmpty() || app.getFilePath().isEmpty());
-            //Save as function goes here
+        if (app.getFileName().isEmpty() || app.getFilePath().isEmpty())
+        {
+            return fileSaveAs(app, textArea);
+        }
         else
         {
             try
             {
-                final FileWriter fileWriter = new FileWriter(app.getFilePath() + "/" + app.getFileName());
-                final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                final List<String> lines = textArea.getText().lines().toList();
+                File file = new File(app.getFilePath() + "/" + app.getFileName());
 
-                for (String line : lines)
-                {
-                    if (lines.getLast().equals(line))
-                    {
-                        bufferedWriter.write(line);
-                    }
-                    else
-                    {
-                        bufferedWriter.write(line + '\n');
-                    }
-                }
+                saveFile(file, textArea);
+                app.setFileContent(textArea.getText());
 
-                bufferedWriter.close();
-                app.setFileContent(String.join("\n", lines));
+                return true;
             }
             catch (IOException e)
             {
                 JOptionPane.showMessageDialog(app, "Could not open file.", "Error Opening File", JOptionPane.ERROR_MESSAGE);
             }
         }
+
+        return false;
+    }
+
+    public static boolean fileSaveAs(final App app, final JTextArea textArea)
+    {
+        final JFileChooser fileChooser = new JFileChooser();
+        final int option = fileChooser.showSaveDialog(app);
+
+        if (option == JFileChooser.APPROVE_OPTION)
+        {
+            try
+            {
+                saveFile(fileChooser.getSelectedFile(), textArea);
+                setAppProperties(app, fileChooser.getSelectedFile(), textArea.getText());
+
+                return true;
+            }
+            catch (IOException e)
+            {
+                JOptionPane.showMessageDialog(app, "Could not open file.", "Error Opening File", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+        else if (option == JFileChooser.ERROR_OPTION)
+        {
+            JOptionPane.showMessageDialog(app, "Could not save the file.", "Error Saving File", JOptionPane.ERROR_MESSAGE);
+        }
+
+        return false;
     }
 
     private static void newFile(final App app, final JTextArea textArea)
@@ -121,5 +145,34 @@ public final class FileOperations
         app.setFileName("");
         app.setFileContent("");
         textArea.setText("");
+    }
+
+    private static void saveFile(final File file, final JTextArea textArea) throws IOException
+    {
+        final FileWriter fileWriter = new FileWriter(file);
+        final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        final List<String> lines = textArea.getText().lines().toList();
+
+        for (String line : lines)
+        {
+            if (lines.getLast().equals(line))
+            {
+                bufferedWriter.write(line);
+            }
+            else
+            {
+                bufferedWriter.write(line + '\n');
+            }
+        }
+
+        bufferedWriter.close();
+    }
+
+    private static void setAppProperties(final App app, File file, String fileContent)
+    {
+        app.setTitle("NEdit - " + file.getName());
+        app.setFilePath(file.getParent());
+        app.setFileName(file.getName());
+        app.setFileContent(fileContent);
     }
 }

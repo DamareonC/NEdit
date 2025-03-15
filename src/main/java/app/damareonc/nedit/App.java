@@ -25,6 +25,7 @@ public final class App extends JFrame
         newMenuItem.addActionListener(actionEvent -> FileOperations.fileNew(this, textArea));
         openMenuItem.addActionListener(actionEvent -> FileOperations.fileOpen(this, textArea));
         saveMenuItem.addActionListener(actionEvent -> FileOperations.fileSave(this, textArea));
+        saveAsMenuItem.addActionListener(actionEvent -> FileOperations.fileSaveAs(this, textArea));
 
         fileMenu.add(newMenuItem);
         fileMenu.add(openMenuItem);

@@ -24,15 +24,19 @@ public final class WindowCloseListener extends WindowAdapter
 
             if (option == JOptionPane.YES_OPTION || option == JOptionPane.NO_OPTION)
             {
-                this.app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                if (option == JOptionPane.YES_OPTION)
+                {
+                    final boolean fileSaved = FileOperations.fileSave(this.app, this.textArea);
 
-                if (option == JOptionPane.YES_OPTION);
-                    //Save function goes here
+                    if (!fileSaved) return;
+                }
+
+                System.exit(0);
             }
-            else
-            {
-                this.app.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-            }
+        }
+        else
+        {
+            System.exit(0);
         }
     }
 }
