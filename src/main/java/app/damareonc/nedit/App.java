@@ -22,6 +22,7 @@ public final class App extends JFrame
         final JScrollPane scrollPane = new JScrollPane(textArea);
 
         newMenuItem.addActionListener(actionEvent -> FileOperations.fileNew(this, textArea));
+        openMenuItem.addActionListener(actionEvent -> FileOperations.fileOpen(this, textArea));
 
         fileMenu.add(newMenuItem);
         fileMenu.add(openMenuItem);
