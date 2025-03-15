@@ -5,6 +5,7 @@ import java.awt.*;
 
 public final class App extends JFrame
 {
+    private String filePath = "";
     private String fileName = "";
     private String fileContent = "";
 
@@ -23,6 +24,7 @@ public final class App extends JFrame
 
         newMenuItem.addActionListener(actionEvent -> FileOperations.fileNew(this, textArea));
         openMenuItem.addActionListener(actionEvent -> FileOperations.fileOpen(this, textArea));
+        saveMenuItem.addActionListener(actionEvent -> FileOperations.fileSave(this, textArea));
 
         fileMenu.add(newMenuItem);
         fileMenu.add(openMenuItem);
@@ -36,6 +38,11 @@ public final class App extends JFrame
         this.addWindowListener(new WindowCloseListener(this, textArea));
     }
 
+    public void setFilePath(final String filePath)
+    {
+        this.filePath = filePath;
+    }
+
     public void setFileName(final String fileName)
     {
         this.fileName = fileName;
@@ -44,6 +51,11 @@ public final class App extends JFrame
     public void setFileContent(final String fileContent)
     {
         this.fileContent = fileContent;
+    }
+
+    public String getFilePath()
+    {
+        return this.filePath;
     }
 
     public String getFileName()
