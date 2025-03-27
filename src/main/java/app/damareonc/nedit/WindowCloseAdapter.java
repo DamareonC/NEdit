@@ -4,12 +4,12 @@ import javax.swing.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public final class WindowCloseListener extends WindowAdapter
+public final class WindowCloseAdapter extends WindowAdapter
 {
     private final App app;
     private final JTextArea textArea;
 
-    public WindowCloseListener(final App app, final JTextArea textArea)
+    public WindowCloseAdapter(final App app, final JTextArea textArea)
     {
         this.app = app;
         this.textArea = textArea;

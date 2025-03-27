@@ -11,7 +11,7 @@ public final class App extends JFrame
 
     public App()
     {
-        super("NEdit");
+        this.setTitle(String.format("NEdit - %s", !this.fileName.isEmpty() ? this.fileName : "<unnamed>"));
 
         final JMenuBar menuBar = new JMenuBar();
         final JMenu fileMenu = new JMenu("File");
@@ -26,6 +26,7 @@ public final class App extends JFrame
         openMenuItem.addActionListener(actionEvent -> FileOperations.fileOpen(this, textArea));
         saveMenuItem.addActionListener(actionEvent -> FileOperations.fileSave(this, textArea));
         saveAsMenuItem.addActionListener(actionEvent -> FileOperations.fileSaveAs(this, textArea));
+        textArea.addKeyListener(new KeyTypedAdapter(this, textArea));
 
         fileMenu.add(newMenuItem);
         fileMenu.add(openMenuItem);
@@ -36,7 +37,7 @@ public final class App extends JFrame
         this.add(menuBar, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
 
-        this.addWindowListener(new WindowCloseListener(this, textArea));
+        this.addWindowListener(new WindowCloseAdapter(this, textArea));
     }
 
     public void setFilePath(final String filePath)

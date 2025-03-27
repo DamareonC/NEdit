@@ -168,9 +168,9 @@ public final class FileOperations
         bufferedWriter.close();
     }
 
-    private static void setAppProperties(final App app, File file, String fileContent)
+    private static void setAppProperties(final App app, final File file, final String fileContent)
     {
-        app.setTitle("NEdit - " + file.getName());
+        app.setTitle(String.format("NEdit - %s", file.getName()));
         app.setFilePath(file.getParent());
         app.setFileName(file.getName());
         app.setFileContent(fileContent);
