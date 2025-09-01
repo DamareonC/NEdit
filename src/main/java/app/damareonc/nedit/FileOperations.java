@@ -37,50 +37,17 @@ public final class FileOperations
 
         if (option == JFileChooser.APPROVE_OPTION)
         {
-            try
-            {
-                final FileReader fileReader = new FileReader(fileChooser.getSelectedFile());
-                final BufferedReader bufferedReader = new BufferedReader(fileReader);
-                final StringBuilder stringBuilder = new StringBuilder();
-                String line;
-
-                while ((line = bufferedReader.readLine()) != null)
-                {
-                    stringBuilder.append(line).append('\n');
-                }
-
-                bufferedReader.close();
-                stringBuilder.reverse().deleteCharAt(0).reverse();
-
-                if (!app.getFileContent().equals(textArea.getText()))
-                {
-                    final int saveOption = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before opening another file?", !app.getFileName().isEmpty() ? app.getFileName() : "<unnamed>"));
-
-                    if (saveOption == JOptionPane.CANCEL_OPTION) return;
-                    else if (saveOption == JOptionPane.YES_OPTION)
-                    {
-                        final boolean fileSaved = fileSave(app, textArea);
-
-                        if (!fileSaved) return;
-                    }
-                }
-
-                textArea.setText(stringBuilder.toString());
-                setAppProperties(app, fileChooser.getSelectedFile(), stringBuilder.toString());
-            }
-            catch (FileNotFoundException e)
-            {
-                JOptionPane.showMessageDialog(app, "Could not open the file.", "Error Opening File", JOptionPane.ERROR_MESSAGE);
-            }
-            catch (IOException e)
-            {
-                JOptionPane.showMessageDialog(app, "Could not read file.", "Error Reading File", JOptionPane.ERROR_MESSAGE);
-            }
+            openFile(app, textArea, fileChooser.getSelectedFile());
         }
         else if (option == JFileChooser.ERROR_OPTION)
         {
             JOptionPane.showMessageDialog(app, "Could not open the file.", "Error Opening File", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    public static void fileOpenFromArgument(final App app, final JTextArea textArea, String filePath)
+    {
+        openFile(app, textArea, new File(filePath));
     }
 
     public static boolean fileSave(final App app, final JTextArea textArea)
@@ -145,6 +112,49 @@ public final class FileOperations
         app.setFileName("");
         app.setFileContent("");
         textArea.setText("");
+    }
+
+    private static void openFile(final App app, final JTextArea textArea, final File file)
+    {
+        try
+        {
+            final FileReader fileReader = new FileReader(file);
+            final BufferedReader bufferedReader = new BufferedReader(fileReader);
+            final StringBuilder stringBuilder = new StringBuilder();
+            String line;
+
+            while ((line = bufferedReader.readLine()) != null)
+            {
+                stringBuilder.append(line).append('\n');
+            }
+
+            bufferedReader.close();
+            stringBuilder.reverse().deleteCharAt(0).reverse();
+
+            if (!app.getFileContent().equals(textArea.getText()))
+            {
+                final int saveOption = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before opening another file?", !app.getFileName().isEmpty() ? app.getFileName() : "<unnamed>"));
+
+                if (saveOption == JOptionPane.CANCEL_OPTION) return;
+                else if (saveOption == JOptionPane.YES_OPTION)
+                {
+                    final boolean fileSaved = fileSave(app, textArea);
+
+                    if (!fileSaved) return;
+                }
+            }
+
+            textArea.setText(stringBuilder.toString());
+            setAppProperties(app, file, stringBuilder.toString());
+        }
+        catch (FileNotFoundException e)
+        {
+            JOptionPane.showMessageDialog(app, "Could not open the file.", "Error Opening File", JOptionPane.ERROR_MESSAGE);
+        }
+        catch (IOException e)
+        {
+            JOptionPane.showMessageDialog(app, "Could not read file.", "Error Reading File", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private static void saveFile(final File file, final JTextArea textArea) throws IOException

@@ -9,7 +9,7 @@ public final class App extends JFrame
     private String fileName = "";
     private String fileContent = "";
 
-    public App()
+    public App(String filePath)
     {
         this.setTitle(String.format("NEdit - %s", !this.fileName.isEmpty() ? this.fileName : "<unnamed>"));
 
@@ -38,6 +38,11 @@ public final class App extends JFrame
         this.add(scrollPane, BorderLayout.CENTER);
 
         this.addWindowListener(new WindowCloseAdapter(this, textArea));
+
+        if (!filePath.isEmpty())
+        {
+            FileOperations.fileOpenFromArgument(this, textArea, filePath);
+        }
     }
 
     public void setFilePath(final String filePath)
