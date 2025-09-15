@@ -1,4 +1,4 @@
-package app.damareonc.nedit;
+package app.damareonc.nedit.util;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -6,7 +6,9 @@ import javax.swing.*;
 import java.io.*;
 import java.util.List;
 
-public final class FileOperations
+import app.damareonc.nedit.App;
+
+public final class FileUtil
 {
     public static void fileNew(final @NotNull App app, final @NotNull JTextArea textArea)
     {
@@ -32,7 +34,7 @@ public final class FileOperations
         }
     }
 
-    public static void fileOpen(final App app, final JTextArea textArea)
+    public static void fileOpen(@NotNull final App app, @NotNull final JTextArea textArea)
     {
         final JFileChooser fileChooser = new JFileChooser();
         final int option = fileChooser.showOpenDialog(app);
@@ -47,12 +49,12 @@ public final class FileOperations
         }
     }
 
-    public static void fileOpenFromArgument(final App app, final JTextArea textArea, String filePath)
+    public static void fileOpenFromArgument(@NotNull final App app, @NotNull final JTextArea textArea, @NotNull final String filePath)
     {
         openFile(app, textArea, new File(filePath));
     }
 
-    public static boolean fileSave(final @NotNull App app, final @NotNull JTextArea textArea)
+    public static boolean fileSave(@NotNull final App app, @NotNull final JTextArea textArea)
     {
         if (app.getFileContent().equals(textArea.getText())) return true;
 
@@ -80,7 +82,7 @@ public final class FileOperations
         return false;
     }
 
-    public static boolean fileSaveAs(final App app, final JTextArea textArea)
+    public static boolean fileSaveAs(@NotNull final App app, @NotNull final JTextArea textArea)
     {
         final JFileChooser fileChooser = new JFileChooser();
         final int option = fileChooser.showSaveDialog(app);
@@ -107,7 +109,7 @@ public final class FileOperations
         return false;
     }
 
-    private static void newFile(final @NotNull App app, final @NotNull JTextArea textArea)
+    private static void newFile(@NotNull final App app, @NotNull final JTextArea textArea)
     {
         app.setTitle("NEdit");
         app.setFilePath("");
@@ -116,7 +118,7 @@ public final class FileOperations
         textArea.setText("");
     }
 
-    private static void openFile(final App app, final JTextArea textArea, final File file)
+    private static void openFile(@NotNull final App app, @NotNull final JTextArea textArea, @NotNull final File file)
     {
         try
         {
@@ -159,7 +161,7 @@ public final class FileOperations
         }
     }
 
-    private static void saveFile(final File file, final @NotNull JTextArea textArea) throws IOException
+    private static void saveFile(@NotNull final File file, @NotNull final JTextArea textArea) throws IOException
     {
         final FileWriter fileWriter = new FileWriter(file);
         final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -180,7 +182,7 @@ public final class FileOperations
         bufferedWriter.close();
     }
 
-    private static void setAppProperties(final @NotNull App app, final @NotNull File file, final String fileContent)
+    private static void setAppProperties(@NotNull final App app, @NotNull final File file, @NotNull final String fileContent)
     {
         app.setTitle(String.format("NEdit - %s", file.getName()));
         app.setFilePath(file.getParent());

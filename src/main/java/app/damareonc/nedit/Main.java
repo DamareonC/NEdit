@@ -7,7 +7,7 @@ import javax.swing.*;
 
 public final class Main
 {
-    public static void main(String @NotNull [] args)
+    public static void main(@NotNull final String[] args)
     {
         FlatLightLaf.setup();
 

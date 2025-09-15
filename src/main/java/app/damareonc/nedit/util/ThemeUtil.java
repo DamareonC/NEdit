@@ -1,4 +1,4 @@
-package app.damareonc.nedit;
+package app.damareonc.nedit.util;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
@@ -6,7 +6,7 @@ import com.formdev.flatlaf.themes.FlatMacLightLaf;
 
 import java.awt.*;
 
-public final class ThemeOperations
+public final class ThemeUtil
 {
     public static void themeChange(final int selectedIndex)
     {
