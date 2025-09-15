@@ -1,12 +1,14 @@
 package app.damareonc.nedit;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.io.*;
 import java.util.List;
 
 public final class FileOperations
 {
-    public static void fileNew(final App app, final JTextArea textArea)
+    public static void fileNew(final @NotNull App app, final @NotNull JTextArea textArea)
     {
         if (!app.getFileContent().equals(textArea.getText()))
         {
@@ -50,7 +52,7 @@ public final class FileOperations
         openFile(app, textArea, new File(filePath));
     }
 
-    public static boolean fileSave(final App app, final JTextArea textArea)
+    public static boolean fileSave(final @NotNull App app, final @NotNull JTextArea textArea)
     {
         if (app.getFileContent().equals(textArea.getText())) return true;
 
@@ -105,7 +107,7 @@ public final class FileOperations
         return false;
     }
 
-    private static void newFile(final App app, final JTextArea textArea)
+    private static void newFile(final @NotNull App app, final @NotNull JTextArea textArea)
     {
         app.setTitle("NEdit");
         app.setFilePath("");
@@ -157,7 +159,7 @@ public final class FileOperations
         }
     }
 
-    private static void saveFile(final File file, final JTextArea textArea) throws IOException
+    private static void saveFile(final File file, final @NotNull JTextArea textArea) throws IOException
     {
         final FileWriter fileWriter = new FileWriter(file);
         final BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
@@ -178,7 +180,7 @@ public final class FileOperations
         bufferedWriter.close();
     }
 
-    private static void setAppProperties(final App app, final File file, final String fileContent)
+    private static void setAppProperties(final @NotNull App app, final @NotNull File file, final String fileContent)
     {
         app.setTitle(String.format("NEdit - %s", file.getName()));
         app.setFilePath(file.getParent());

@@ -1,5 +1,7 @@
 package app.damareonc.nedit;
 
+import org.jetbrains.annotations.NotNull;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,7 +11,7 @@ public final class App extends JFrame
     private String fileName = "";
     private String fileContent = "";
 
-    public App(String filePath)
+    public App(@NotNull String filePath)
     {
         this.setTitle(String.format("NEdit - %s", !this.fileName.isEmpty() ? this.fileName : "<unnamed>"));
 
