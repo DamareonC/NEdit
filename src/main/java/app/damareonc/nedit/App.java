@@ -1,5 +1,7 @@
 package app.damareonc.nedit;
 
+import com.formdev.flatlaf.*;
+import com.formdev.flatlaf.themes.*;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -21,6 +23,10 @@ public final class App extends JFrame
         final JMenuItem openMenuItem = new JMenuItem("Open...");
         final JMenuItem saveMenuItem = new JMenuItem("Save");
         final JMenuItem saveAsMenuItem = new JMenuItem("Save As...");
+
+        final JMenu themeMenu = new JMenu("Theme");
+        final JList<String> themeList = new JList<>(new String[]{"FlatLaf Light", "FlatLaf Dark", "FlatLaf IntelliJ", "FlatLaf Darcula", "FlatLaf macOS Light", "FlatLaf macOS Dark"});
+
         final JTextArea textArea = new JTextArea();
         final JScrollPane scrollPane = new JScrollPane(textArea);
 
@@ -28,6 +34,7 @@ public final class App extends JFrame
         openMenuItem.addActionListener(actionEvent -> FileOperations.fileOpen(this, textArea));
         saveMenuItem.addActionListener(actionEvent -> FileOperations.fileSave(this, textArea));
         saveAsMenuItem.addActionListener(actionEvent -> FileOperations.fileSaveAs(this, textArea));
+        themeList.addListSelectionListener(listSelectionEvent -> ThemeOperations.themeChange(themeList.getSelectedIndex()));
         textArea.addKeyListener(new KeyTypedAdapter(this, textArea));
 
         fileMenu.add(newMenuItem);
@@ -35,6 +42,10 @@ public final class App extends JFrame
         fileMenu.add(saveMenuItem);
         fileMenu.add(saveAsMenuItem);
         menuBar.add(fileMenu);
+
+        themeList.setSelectedIndex(0);
+        themeMenu.add(themeList);
+        menuBar.add(themeMenu);
 
         this.add(menuBar, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
