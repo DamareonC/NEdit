@@ -23,9 +23,9 @@ public final class WindowCloseAdapter extends WindowAdapter
     @Override
     public void windowClosing(@NotNull final WindowEvent windowEvent)
     {
-        if (!this.app.getFileContent().equals(this.textArea.getText()))
+        if (!this.app.fileContent.equals(this.textArea.getText()))
         {
-            final int option = JOptionPane.showConfirmDialog(this.app, String.format("There are unsaved changes in %s. Do you want to save changes before closing NEdit?", !this.app.getFileName().isEmpty() ? this.app.getFileName() : "<unnamed>"));
+            final int option = JOptionPane.showConfirmDialog(this.app, String.format("There are unsaved changes in %s. Do you want to save changes before closing NEdit?", !this.app.fileName.isEmpty() ? this.app.fileName : "<unnamed>"));
 
             if (option == JOptionPane.YES_OPTION || option == JOptionPane.NO_OPTION)
             {

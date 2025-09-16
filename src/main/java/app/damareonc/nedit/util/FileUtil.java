@@ -10,11 +10,11 @@ import app.damareonc.nedit.App;
 
 public final class FileUtil
 {
-    public static void fileNew(final @NotNull App app, final @NotNull JTextArea textArea)
+    public static void fileNew(@NotNull final App app, @NotNull final JTextArea textArea)
     {
-        if (!app.getFileContent().equals(textArea.getText()))
+        if (!app.fileContent.equals(textArea.getText()))
         {
-            final int option = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before creating a new file?", !app.getFileName().isEmpty() ? app.getFileName() : "<unnamed>"));
+            final int option = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before creating a new file?", !app.fileName.isEmpty() ? app.fileName : "<unnamed>"));
 
             if (option == JOptionPane.YES_OPTION || option == JOptionPane.NO_OPTION)
             {
@@ -56,9 +56,9 @@ public final class FileUtil
 
     public static boolean fileSave(@NotNull final App app, @NotNull final JTextArea textArea)
     {
-        if (app.getFileContent().equals(textArea.getText())) return true;
+        if (app.fileContent.equals(textArea.getText())) return true;
 
-        if (app.getFileName().isEmpty() || app.getFilePath().isEmpty())
+        if (app.fileName.isEmpty() || app.filePath.isEmpty())
         {
             return fileSaveAs(app, textArea);
         }
@@ -66,10 +66,10 @@ public final class FileUtil
         {
             try
             {
-                File file = new File(app.getFilePath() + "/" + app.getFileName());
+                File file = new File(app.filePath + "/" + app.fileName);
 
                 saveFile(file, textArea);
-                app.setFileContent(textArea.getText());
+                app.fileContent = textArea.getText();
 
                 return true;
             }
@@ -111,10 +111,10 @@ public final class FileUtil
 
     private static void newFile(@NotNull final App app, @NotNull final JTextArea textArea)
     {
-        app.setTitle("NEdit");
-        app.setFilePath("");
-        app.setFileName("");
-        app.setFileContent("");
+        app.setTitle("NEdit - <unnamed>");
+        app.filePath = "";
+        app.fileName = "";
+        app.fileContent = "";
         textArea.setText("");
     }
 
@@ -135,9 +135,9 @@ public final class FileUtil
             bufferedReader.close();
             stringBuilder.reverse().deleteCharAt(0).reverse();
 
-            if (!app.getFileContent().equals(textArea.getText()))
+            if (!app.fileContent.equals(textArea.getText()))
             {
-                final int saveOption = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before opening another file?", !app.getFileName().isEmpty() ? app.getFileName() : "<unnamed>"));
+                final int saveOption = JOptionPane.showConfirmDialog(app, String.format("There are unsaved changes in %s. Do you want to save changes before opening another file?", !app.fileName.isEmpty() ? app.fileName : "<unnamed>"));
 
                 if (saveOption == JOptionPane.CANCEL_OPTION) return;
                 else if (saveOption == JOptionPane.YES_OPTION)
@@ -185,8 +185,8 @@ public final class FileUtil
     private static void setAppProperties(@NotNull final App app, @NotNull final File file, @NotNull final String fileContent)
     {
         app.setTitle(String.format("NEdit - %s", file.getName()));
-        app.setFilePath(file.getParent());
-        app.setFileName(file.getName());
-        app.setFileContent(fileContent);
+        app.filePath = file.getParent();
+        app.fileName = file.getName();
+        app.fileContent = fileContent;
     }
 }

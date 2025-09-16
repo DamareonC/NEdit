@@ -2,7 +2,7 @@
 
 NEdit is text editing software made with Java and Java Swing, using the [FlatLaf](https://www.formdev.com/flatlaf/) Look and Feel. It is used for simple file editing, allowing for creating, opening, and saving files.
 
-In the future, there will be UI changes and support for shortcuts and more editing features (e.g. find/replace).
+In the future, there will be more editing features (e.g. find/replace).
 
 ## Prerequisites
 

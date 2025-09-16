@@ -22,9 +22,9 @@ public final class KeyTypedAdapter extends KeyAdapter
     @Override
     public void keyReleased(@NotNull final KeyEvent keyEvent)
     {
-        final boolean isSaved = this.app.getFileContent().equals(this.textArea.getText());
-        final boolean hasName = !this.app.getFileName().isEmpty();
+        final boolean isSaved = this.app.fileContent.equals(this.textArea.getText());
+        final boolean hasName = !this.app.fileName.isEmpty();
 
-        this.app.setTitle(String.format("NEdit - %s%s", hasName ? this.app.getFileName() : "<unnamed>", isSaved ? "" : "*"));
+        this.app.setTitle(String.format("NEdit - %s%s", hasName ? this.app.fileName : "<unnamed>", isSaved ? "" : "*"));
     }
 }

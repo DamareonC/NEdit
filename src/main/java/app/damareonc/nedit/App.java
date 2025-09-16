@@ -11,62 +11,34 @@ import app.damareonc.nedit.util.*;
 
 public final class App extends JFrame
 {
-    private String filePath = "";
-    private String fileName = "";
-    private String fileContent = "";
+    public String filePath = "";
+    public String fileName = "";
+    public String fileContent = "";
 
-    public App(@NotNull String filePath)
+    public App(@NotNull final String filePath)
     {
         this.setTitle(String.format("NEdit - %s", !this.fileName.isEmpty() ? this.fileName : "<unnamed>"));
 
-        final JTextArea textArea = new JTextArea();
-        final JScrollPane scrollPane = new JScrollPane(textArea);
+        final JTextArea fileContentTextArea = new JTextArea();
+        final JScrollPane scrollPane = new JScrollPane(fileContentTextArea);
         final JMenuBar menuBar = new JMenuBar();
-        final FileMenu fileMenu = new FileMenu(this, textArea);
+        final FileMenu fileMenu = new FileMenu(this, fileContentTextArea);
         final ThemeMenu themeMenu = new ThemeMenu();
+        final ViewMenu viewMenu = new ViewMenu(fileContentTextArea);
 
         menuBar.add(fileMenu);
         menuBar.add(themeMenu);
+        menuBar.add(viewMenu);
 
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(menuBar, BorderLayout.NORTH);
 
-        textArea.addKeyListener(new KeyTypedAdapter(this, textArea));
-        this.addWindowListener(new WindowCloseAdapter(this, textArea));
+        fileContentTextArea.addKeyListener(new KeyTypedAdapter(this, fileContentTextArea));
+        this.addWindowListener(new WindowCloseAdapter(this, fileContentTextArea));
 
         if (!filePath.isEmpty())
         {
-            FileUtil.fileOpenFromArgument(this, textArea, filePath);
+            FileUtil.fileOpenFromArgument(this, fileContentTextArea, filePath);
         }
-    }
-
-    public void setFilePath(final String filePath)
-    {
-        this.filePath = filePath;
-    }
-
-    public void setFileName(final String fileName)
-    {
-        this.fileName = fileName;
-    }
-
-    public void setFileContent(final String fileContent)
-    {
-        this.fileContent = fileContent;
-    }
-
-    public String getFilePath()
-    {
-        return this.filePath;
-    }
-
-    public String getFileName()
-    {
-        return this.fileName;
-    }
-
-    public String getFileContent()
-    {
-        return this.fileContent;
     }
 }
