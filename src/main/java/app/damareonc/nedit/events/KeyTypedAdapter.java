@@ -1,4 +1,4 @@
-package app.damareonc.nedit.event;
+package app.damareonc.nedit.events;
 
 import org.jetbrains.annotations.NotNull;
 

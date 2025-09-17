@@ -1,4 +1,4 @@
-package app.damareonc.nedit.util;
+package app.damareonc.nedit.utils;
 
 import org.jetbrains.annotations.NotNull;
 

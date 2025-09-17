@@ -5,9 +5,10 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.awt.*;
 
-import app.damareonc.nedit.event.*;
+import app.damareonc.nedit.events.*;
 import app.damareonc.nedit.menus.*;
-import app.damareonc.nedit.util.*;
+import app.damareonc.nedit.textareas.*;
+import app.damareonc.nedit.utils.*;
 
 public final class App extends JFrame
 {
@@ -19,7 +20,7 @@ public final class App extends JFrame
     {
         this.setTitle(String.format("NEdit - %s", !this.fileName.isEmpty() ? this.fileName : "<unnamed>"));
 
-        final JTextArea fileContentTextArea = new JTextArea();
+        final FileContentTextArea fileContentTextArea = new FileContentTextArea(this);
         final JScrollPane scrollPane = new JScrollPane(fileContentTextArea);
         final JMenuBar menuBar = new JMenuBar();
         final FileMenu fileMenu = new FileMenu(this, fileContentTextArea);
@@ -33,7 +34,6 @@ public final class App extends JFrame
         this.add(scrollPane, BorderLayout.CENTER);
         this.add(menuBar, BorderLayout.NORTH);
 
-        fileContentTextArea.addKeyListener(new KeyTypedAdapter(this, fileContentTextArea));
         this.addWindowListener(new WindowCloseAdapter(this, fileContentTextArea));
 
         if (!filePath.isEmpty())

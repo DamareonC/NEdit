@@ -1,4 +1,4 @@
-package app.damareonc.nedit.event;
+package app.damareonc.nedit.events;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 import app.damareonc.nedit.App;
-import app.damareonc.nedit.util.FileUtil;
+import app.damareonc.nedit.utils.FileUtil;
 
 public final class WindowCloseAdapter extends WindowAdapter
 {

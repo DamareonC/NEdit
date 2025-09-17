@@ -20,4 +20,4 @@ To build NEdit, run:
 
 ## Run
 
-To run NEdit, run: `java -jar ./target/NEdit-1.1-SNAPSHOT.jar`
+To run NEdit, run: `java -jar ./target/NEdit-1.1.jar`

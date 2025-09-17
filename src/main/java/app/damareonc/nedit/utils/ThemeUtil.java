@@ -1,4 +1,4 @@
-package app.damareonc.nedit.util;
+package app.damareonc.nedit.utils;
 
 import com.formdev.flatlaf.*;
 import com.formdev.flatlaf.themes.FlatMacDarkLaf;
